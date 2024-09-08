@@ -3,6 +3,7 @@ import './Register.scss'
 import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { registerNewUser } from '../../service/userService';
 
 const Register = (props) => {
     const [email, setEmail] = useState("");
@@ -25,9 +26,9 @@ const Register = (props) => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/v1/test-api").then(data => {
-            console.log(">> Check data axios: ", data);
-        });
+        // axios.get("http://localhost:8080/api/v1/test-api").then(data => {
+        //     console.log(">> Check data axios: ", data);
+        // });
 
 
     }, []);
@@ -69,15 +70,45 @@ const Register = (props) => {
 
         return true;
     }
-    const handleRegister = () => {
+    const handleRegister = async () => {
         let check = isValidInputs();
-        if (check == true) {
-            axios.post("http://localhost:8080/api/v1/register", {
-                email, phone, username, password
-            })
-        }
+        if (check === true) {
+            try {
+                let response = await registerNewUser(email, phone, username, password);
+                let serverData = response.data;
 
+                if (+serverData.EC === 0) {
+                    toast.success(serverData.EM);
+                    history.push("/login");
+                } else if (+serverData.EC === 1) {
+                    // Server-side validation errors
+                    if (serverData.EM.includes("email")) {
+                        setobjCheckInput({ ...defaultValidInput, isValidEmail: false });
+                        toast.error("This email already exists.");
+                    }
+                    if (serverData.EM.includes("phone")) {
+                        setobjCheckInput({ ...defaultValidInput, isValidPhone: false });
+                        toast.error("This phone number already exists.");
+                    }
+                } else {
+                    toast.error(serverData.EM);
+                }
+            }
+            catch (error) {
+                console.log("Error in registration:", error);
+                toast.error("An error occurred during registration. Please try again.");
+            }
+            // let response = await registerNewUser(email, phone, username, password);
+            // let serverData = response.data;
+            // if (+serverData.EC === 0) {
+            //     toast.success(serverData.EM);
+            //     history.push("/login");
+            // } else {
+            //     toast.error(serverData.EM);
+            // }
+        }
     }
+
     return (
         <div className="register-container ">
             <div className="container">
