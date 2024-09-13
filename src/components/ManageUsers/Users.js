@@ -4,6 +4,7 @@ import { fetchAllUser, deleteUser } from "../../service/userService";
 import ReactPaginate from 'react-paginate';
 import { toast } from "react-toastify";
 import ModalDelete from "./ModalDelete";
+import ModalUser from "./ModalUser";
 
 const Users = (props) => {
 
@@ -12,8 +13,8 @@ const Users = (props) => {
     const [currentLimit, setCurrentLimit] = useState(3);
     const [totalPages, setTotalPages] = useState(0);
 
+    const [isShowModalUser, setIsShowModalUser] = useState(false);
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-
     const [dataModal, setDataModal] = useState({});
     useEffect(() => {
         fetchUsers();
@@ -55,6 +56,9 @@ const Users = (props) => {
             toast.error(response.data.EM);
         }
     }
+    const onHideModalUser = () => {
+        setIsShowModalUser(false);
+    }
     return (
         <>
             <div className="container">
@@ -65,8 +69,8 @@ const Users = (props) => {
 
                         </div>
                         <div className="actions">
-                            <button className="btn btn-success">Refesh</button>
-                            <button className="btn btn-primary">Add new User</button>
+                            <button className="btn btn-success me-3">Refesh</button>
+                            <button className="btn btn-primary " onClick={() => setIsShowModalUser(true)}>Add new User</button>
                         </div>
                     </div>
                     <div className="user-body">
@@ -93,8 +97,8 @@ const Users = (props) => {
                                                     <td>{item.username}</td>
                                                     <td>{item.Group ? item.Group.name : ""}</td>
                                                     <td>
-                                                        <button class="btn btn-warning mx-3">Edit</button>
-                                                        <button class="btn btn-danger"
+                                                        <button className="btn btn-warning mx-3">Edit</button>
+                                                        <button className="btn btn-danger"
                                                             onClick={() => handleDeleteUser(item)}
                                                         >Delete
 
@@ -143,6 +147,11 @@ const Users = (props) => {
                 handleClose={handleClose}
                 confirmDeleteUser={confirmDeleteUser}
                 dataModal={dataModal}
+            />
+            <ModalUser
+                title={"Create new user"}
+                onHide={onHideModalUser}
+                show={isShowModalUser}
             />
         </>
     )
