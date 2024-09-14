@@ -5,3 +5,25 @@
         }
     }
 }
+
+.manage-users-container {
+    i {
+        padding-right: 7px;
+    }
+
+    .actions {
+        .refresh {
+            margin-right: 10px;
+        }
+    }
+
+    .user-body {
+        .edit {
+            cursor: pointer;
+        }
+
+        .delete {
+            cursor: pointer;
+        }
+    }
+}
