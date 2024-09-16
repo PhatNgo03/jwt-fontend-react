@@ -126,34 +126,37 @@ const ModalUser = (props) => {
     }
 
 
-    const getGroups = async () => {
-        let res = await fetchGroup();
-        if (res && res.EC === 0) {
-            setUserGroups(res.DT);
-            if (res.DT && res.DT.length > 0) {
-                let groups = res.DT;
-                setUserData({ ...userData, group: groups[0].id })
-            }
-        } else {
-            toast.error(res.EM);
-        }
-    }
-    // const getGroups = useCallback(async () => {
+    // const getGroups = async () => {
     //     let res = await fetchGroup();
-    //     if (res && res.data && res.data.EC === 0) {
-    //         setUserGroups(res.data.DT);
-    //         if (res.data.DT && res.data.DT.length > 0) {
-    //             let groups = res.data.DT;
-    //             setUserData(prev => ({ ...prev, group: groups[0].id }));
+    //     if (res && res.EC === 0) {
+    //         setUserGroups(res.DT);
+    //         if (res.DT && res.DT.length > 0) {
+    //             let groups = res.DT;
+    //             setUserData({ ...userData, group: groups[0].id })
     //         }
     //     } else {
-    //         toast.error(res.data.EM);
+    //         toast.error(res.EM);
     //     }
-    // }, []);
+    // }
+    const getGroups = async () => {
+        try {
+            let res = await fetchGroup();
+            if (res && res.EC === 0) {
+                setUserGroups(res.DT);
+                if (res.DT && res.DT.length > 0) {
+                    let groups = res.DT;
+                    setUserData({ ...userData, group: groups[0].id });
+                }
+            } else {
+                toast.error(res?.EM);
+            }
+        } catch (error) {
+            toast.error('An error occurred while fetching groups');
+            console.error('Error fetching groups:', error);
+        }
+    };
 
-    // useEffect(() => {
-    //     getGroups();
-    // }, [getGroups]); // Thêm getGroups vào danh sách phụ thuộc
+
 
     const handleConfirmUser = async () => {
         let check = checkValidateInputs();
