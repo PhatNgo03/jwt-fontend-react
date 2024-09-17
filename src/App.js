@@ -9,14 +9,6 @@ import AppRoutes from './routes/AppRoutes';
 
 function App() {
 
-  const [account, setAccount] = useState({});
-
-  useEffect(() => {
-    let session = sessionStorage.getItem('account');
-    if (session) {
-      setAccount(JSON.parse(session));
-    }
-  }, []); //  [] => run 1 lan
   return (
     <>
       <Router>

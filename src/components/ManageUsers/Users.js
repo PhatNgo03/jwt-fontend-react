@@ -24,11 +24,10 @@ const Users = (props) => {
     const [dataModalUser, setDataModalUser] = useState({});
     useEffect(() => {
         fetchUsers();
-    }, [currentPage])
 
+    }, [currentPage])
     const fetchUsers = async () => {
         let response = await fetchAllUser(currentPage, currentLimit);
-        console.log(">>> check res : ", response);
         if (response && response.EC === 0) {
             setTotalPages(response.DT.totalPages);
             setListUsers(response.DT.users);
