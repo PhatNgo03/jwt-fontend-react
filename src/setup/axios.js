@@ -29,8 +29,7 @@ instance.interceptors.response.use(function (response) {
     switch (status) {
         case 401:
             toast.error("Unauthorized user, please login.");
-            // window.location.href = '/login';
-            break;
+            return error.response.data;
         case 403:
             toast.error("You don't have the permission to access this resource...");
 

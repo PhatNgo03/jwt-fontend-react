@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { getUserAccount } from "../service/userService";
-
+import { set } from "lodash";
 
 const UserContext = React.createContext(null)
 const UserProvider = ({ children }) => {
 
+    const userDefault = {
+        isLoading: true,
+        isAuthenticated: false,
+        token: "",
+        account: {}
+    }
     const [user, setUser] = useState(
         {
+            isLoading: true,
             isAuthenticated: false,
             token: "",
             account: {}
         })
     const loginContext = (userData) => {
-        setUser(userData)
+        setUser({ ...userData, isLoading: false })
     };
 
     const logout = () => {
@@ -31,13 +38,19 @@ const UserProvider = ({ children }) => {
             let data = {
                 isAuthenticated: true,
                 token: token,
-                account: { groupWithRoles, email, username }
+                account: { groupWithRoles, email, username },
+                isLoading: false,
             }
             setUser(data);
+        } else {
+            setUser({ ...userDefault, isLoading: false })
         }
     }
+
     useEffect(() => {
-        fetchUser();
+        if (window.location.pathname !== '/' || window.location.pathname !== '/login') {
+            fetchUser();
+        }
     }, [])
 
     return (
