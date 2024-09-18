@@ -21,3 +21,62 @@
         color: white;
     }
 }
+
+.nav-header {
+    .bg-header {
+        background-color: #20232a
+    }
+
+    .navbar-brand {
+        color: #61dafb !important;
+
+        .logo-img {
+            margin-right: 8px;
+        }
+
+        img {
+            animation: App-logo-spin infinite 20s linear;
+        }
+
+
+        @keyframes App-logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
+
+    .navbar-nav {
+
+        a,
+        nav-link {
+            color: white !important;
+
+            &:hover {
+                color: #61dafb !important;
+            }
+
+
+        }
+    }
+
+    .nav-link {
+        &.active {
+            color: #61dafb !important;
+        }
+    }
+
+    .dropdown-menu {
+        a {
+            color: #212529 !important;
+        }
+    }
+
+
+
+
+}
