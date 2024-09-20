@@ -92,7 +92,8 @@ const Users = (props) => {
                             ><i className="fa fa-refresh" ></i>
                                 Refesh
                             </button>
-                            <button className="btn btn-primary " onClick={() => { setIsShowModalUser(true); setActionModalUser("CREATE") }} ><i class="fa fa-plus-circle"></i>Add new User</button>
+                            <button className="btn btn-primary " onClick={() => { setIsShowModalUser(true); setActionModalUser("CREATE") }} >
+                                <i class="fa fa-plus-circle"></i>Add new User</button>
                         </div>
                     </div>
                     <div className="user-body">

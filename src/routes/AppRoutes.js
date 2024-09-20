@@ -7,7 +7,7 @@ import Login from '../components/Login/Login';
 import Users from '../components/ManageUsers/Users';
 import Register from '../components/Register/Register';
 import PrivateRoutes from "./PrivateRoures";
-
+import Role from "../components/Role/Role";
 
 const AppRoutes = (props) => {
 
@@ -26,6 +26,7 @@ const AppRoutes = (props) => {
 
                 <PrivateRoutes path="/users" component={Users} />
                 <PrivateRoutes path="/projects" component={Project} />
+                <PrivateRoutes path="/roles" component={Role} />
 
                 <Route path="/login">
                     <Login />
