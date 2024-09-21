@@ -8,12 +8,19 @@ import { useEffect, useState, useContext } from 'react';
 import AppRoutes from './routes/AppRoutes';
 import { Puff } from 'react-loader-spinner'
 import { UserContext } from "./context/UserContext";
-
-function App() {
+import { Scrollbars } from 'react-custom-scrollbars-2';
+const App = () => {
   const { user } = useContext(UserContext);
+  const [scrollHeight, setScrollHight] = useState(0);
+
+  useEffect(() => {
+    let windowHeight = window.innerHeight;
+    setScrollHight(windowHeight);
+  }, [user])
 
   return (
-    <>
+
+    <Scrollbars autoHeightMin="100vh" autoHeight>
       <Router>
         {user && user.isLoading ?
           <div className='loading-container'>
@@ -43,7 +50,7 @@ function App() {
       </Router>
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -53,7 +60,7 @@ function App() {
         pauseOnHover
         theme="light"
       ></ToastContainer>
-    </>
+    </Scrollbars>
   );
 }
 

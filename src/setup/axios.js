@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080'
+    // baseURL: process.env.REACT_APP_BACKEND_URL
 });
 
 instance.defaults.withCredentials = true;
@@ -28,7 +29,13 @@ instance.interceptors.response.use(function (response) {
     const status = error && error.response?.status || 500;
     switch (status) {
         case 401:
-            toast.error("Unauthorized user, please login.");
+            if (window.location.pathname !== '/'
+                && window.location.pathname !== '/login'
+                && window.location.pathname !== '/register'
+            ) {
+                toast.error("Unauthorized user, please login.");
+
+            }
             return error.response.data;
         case 403:
             toast.error("You don't have the permission to access this resource...");

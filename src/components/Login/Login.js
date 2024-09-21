@@ -1,13 +1,13 @@
 import { useEffect, useState, useContext } from 'react';
 import './Login.scss'
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { loginUser } from '../../service/userService';
 import { UserContext } from '../../context/UserContext';
 
 
 const Login = (props) => {
-    const { loginContext } = useContext(UserContext);
+    const { user, loginContext } = useContext(UserContext);
     let history = useHistory();
 
     const [valueLogin, setValueLogin] = useState("");
@@ -65,7 +65,11 @@ const Login = (props) => {
             handleLogin();
         }
     }
-
+    useEffect(() => {
+        if (user && user.isAuthenticated) {
+            history.push('/');
+        }
+    }, [])
 
 
     return (
@@ -74,7 +78,7 @@ const Login = (props) => {
                 <div className="row px-3 px-sm-0">
                     <div className="content-left col-12 d-none col-sm-7 d-sm-block">
                         <div className='brand'>
-                            Hoang Phat
+                            <Link to='/'><span title='Return to HomePage'>Hoang Phat</span></Link>
                         </div>
                         <div className='detail'>
                             HoangPhat helps you connect and share with people in your live
@@ -111,7 +115,12 @@ const Login = (props) => {
                             <button className='btn btn-success' onClick={() => handleCreateNewAccount()}>
                                 Create new Account
                             </button>
-
+                            <div className='mt-3 return'>
+                                <Link to='/'>
+                                    <i className='fa fa-arrow-circle-left'></i>
+                                    <span title='Return to HomePage'>Return to HomePage</span>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
